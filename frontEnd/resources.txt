@@ -9,4 +9,12 @@ antd - for building components
 - 
 tailwind - for general styling purposes.
 - coreplugins is added to avoid any overlap in the styling.
+remix icons - for all the icons 
+- 
 
+
+npm modules:
+1. axios :- for performing the api calls.
+2. react-router-dom := for the routing purposes.
+3. redux react-redux @reduxjs/toolkit : for the state management purpose
+4. moment :- for working with time and date.

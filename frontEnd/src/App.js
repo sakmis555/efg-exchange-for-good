@@ -1,15 +1,18 @@
-import { Button } from 'antd';
+import {BrowserRouter, Routes, Route} from "react-router-dom";
+import Home from "./pages/Home";
+import Login from "./pages/Login";
+import Register from './pages/Register';
 
 function App() {
   return (
-    <div className="bg-primary h-screen flex justify-center items-center">
-      <div className='bg-whiteLike p-5'>
-        <h1>hfafafdf</h1>
-        <Button type='primary'>
-          fjaf
-        </Button>
-      </div>
-
+    <div className="">
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={ <Home/> }/>
+          <Route path="/login" element={ <Login/> }/>
+          <Route path="/register" element={ <Register/> }/>
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }
