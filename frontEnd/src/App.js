@@ -2,11 +2,14 @@ import { Button } from 'antd';
 
 function App() {
   return (
-    <div className="App">
-      <h1>hfa</h1>
-      <Button type='primary'>
-        fjaf
-      </Button>
+    <div className="bg-primary h-screen flex justify-center items-center">
+      <div className='bg-whiteLike p-5'>
+        <h1>hfafafdf</h1>
+        <Button type='primary'>
+          fjaf
+        </Button>
+      </div>
+
     </div>
   );
 }

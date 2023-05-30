@@ -1,2 +1,12 @@
 What to study : 
 1. antd - theme concept,
+
+
+
+
+
+antd - for building components
+- 
+tailwind - for general styling purposes.
+- coreplugins is added to avoid any overlap in the styling.
+
