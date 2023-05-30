@@ -18,7 +18,7 @@ function Register() {
   return (
     <div className='h-screen bg-primary flex justify-center items-center'>
       <div className='bg-whiteLike p-5 rounded w-[450px]'>
-        <h1 className='text-primary '>
+        <h1 className='text-primary text-2xl'>
           EFG -  
           <span className='text-lightGray'>
             {" "}REGISTER
