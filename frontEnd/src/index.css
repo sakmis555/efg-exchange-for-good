@@ -26,3 +26,12 @@ button {
   height: 45px !important;
   box-shadow: none !important;
 }
+
+table {
+  border: 1px solid rgb(156, 154, 154) !important;
+  border-radius: 2px;
+}
+
+i {
+  font-size: 20px;
+}

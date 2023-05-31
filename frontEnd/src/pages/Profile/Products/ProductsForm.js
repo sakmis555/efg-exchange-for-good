@@ -56,6 +56,7 @@ function ProductsForm({ showProductForm, setShowProductForm }) {
         message.error(response.message);
       }
     } catch (error) {
+      dispatch(SetLoader(false));
       message.error(error.message);
     }
   }
