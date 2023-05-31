@@ -48,7 +48,9 @@ function ProtectedPage({ children }) {
           </h1>
           <div className="bg-whiteLike py-2 px-5 rounded flex gap-2 items-center">
           <i className="ri-user-4-fill"></i>
-            <span className="underline cursor-pointer uppercase">
+            <span className="underline cursor-pointer uppercase"
+              onClick={() => navigate("/profile")}
+            >
               {user.name}
             </span>
             <i className="ri-logout-box-r-fill ml-10 cursor-pointer"
