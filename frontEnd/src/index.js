@@ -1,31 +1,33 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
-import { ConfigProvider } from 'antd';
-const root = ReactDOM.createRoot(document.getElementById('root'));
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";
+import App from "./App";
+import reportWebVitals from "./reportWebVitals";
+import { Provider } from "react-redux";
+import { ConfigProvider } from "antd";
+import store from "./redux/store";
+const root = ReactDOM.createRoot(document.getElementById("root"));
+
 root.render(
-  <React.StrictMode>
+  <Provider store={store}>
     <ConfigProvider
       theme={{
-        components : {
-          Button : {
-            colorPrimary : "#222831",
-            colorPrimaryHover : "#393E46",
-            borderRadius : "0px",
-          }
+        components: {
+          Button: {
+            colorPrimary: "#222831",
+            colorPrimaryHover: "#393E46",
+            borderRadius: "0px",
+          },
         },
-        token : {
-          borderRadius : "2px",
-          colorPrimary : "#222831"
-        }
+        token: {
+          borderRadius: "2px",
+          colorPrimary: "#222831",
+        },
       }}
     >
       <App />
     </ConfigProvider>
-
-  </React.StrictMode>
+  </Provider>
 );
 
 // If you want to start measuring performance in your app, pass a function
