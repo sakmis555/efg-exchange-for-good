@@ -18,3 +18,61 @@ npm modules:
 2. react-router-dom := for the routing purposes.
 3. redux react-redux @reduxjs/toolkit : for the state management purpose
 4. moment :- for working with time and date.
+
+npm modules- backend :
+1. express : for backend routing purpose
+2. mongoose : for database operations.
+3. jsonwebtoken : for handling jwt tokens
+4. bcryptjs : for hashing the passwords
+5. cloudinary : for storing the images.
+6. nodemon : for restarting the server automatically whenever new code is saved.
+7. dotenv : for storing the environment variables.
+
+
+package-json - frontEnd
+"proxy" : "http://localhost:5000" => backend endpoint
+
+
+Authentication:
+
+- send the input values to the mongodb database through nodejs.
+- api integrations must be in saparate folder
+- index.js files of Login, Registe are only for the rendering purposes, business logic in separate folder.(apicalls)
+
+- axiosInstance.js has an object of axios which is used across all the apis.
+  if not used, need to write the headers for all the end points calls separately.
+   global object
+   localhost.general("token") <= standard way of sending the authorization token to the backend.
+
+- users.js : structure in frontEnd for the api call
+    payload is passed to the end point 
+    returning the response.data to the component in frontEnd.
+    ==>business logic/ api handling logic must be outside the ui files
+
+
+Autherization:
+-   except login and register end points => all other end points are called as the protected routes.
+-   logged in user can access those api.
+What to expect from frontEnd?
+=> only the token sent while login ( have ecrypted form of userId)
+-   initially req.body has not anything, only req.header has the Autherization token
+-   need to decrypted the token, if valid, then send the response.
+-   there will be many api's with the protected route concept, hence 
+    token decryption logic must be stored separately and reused for every protected api call
+    that part is called Middleware.
+What is Middleware?
+=> before executing the protected api calls, middlewares needs to be implemented to check the token.
+-   frontEnd = protected route
+    backend = authorization
+    same concepts.
+
+-   authMiddleware logic outside the file
+    can be used for every end point
+
+-   In front End, there are many pages like admin page, users page, product page.
+    there is a need to verify user at eveypage.
+    hence, global page for the verification 
+-   Protected Route: page refreshes, getCurrentUser is called.
+    if valid response, user is logged in (authorized user)
+    else invalid response, content of the page is not rendered.
+    
