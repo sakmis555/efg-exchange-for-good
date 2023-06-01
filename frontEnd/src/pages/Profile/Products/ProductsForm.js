@@ -1,9 +1,10 @@
 import { Col, Form, Input, Modal, Row, Tabs, message } from "antd";
 import TextArea from "antd/es/input/TextArea";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AddProduct, EditProduct } from "../../../apicalls/products";
 import { SetLoader } from "../../../redux/loadersSlice";
+import Images from "./Images";
 
 const additionalThings = [
   {
@@ -37,6 +38,7 @@ function ProductsForm({
   selectedProduct,
   getData,
 }) {
+  const [selectedTab, setSelectedTab] = useState("1");
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.users);
   const onFinish = async (values) => {
@@ -83,12 +85,16 @@ function ProductsForm({
         onOk={() => {
           formRef.current.submit();
         }}
+        {...(selectedTab === "2" && {footer : false})}
       >
         <div>
           <h1 className="text-3xl text-primary text-center font-semibold uppercase">
             {selectedProduct ? "Edit Product" : "Add Product"}
           </h1>
-          <Tabs defaultActiveKey="1">
+          <Tabs defaultActiveKey="1"
+            activeKey={selectedTab}
+            onChange={(key) => setSelectedTab(key)}
+          >
             <Tabs.TabPane tab="General" key="1">
               <Form layout="vertical" ref={formRef} onFinish={onFinish}>
                 <Form.Item label="Name" name="name" rules={rules}>
@@ -149,8 +155,12 @@ function ProductsForm({
                 </div>
               </Form>
             </Tabs.TabPane>
-            <Tabs.TabPane tab="Images" key="2">
-              Images
+            <Tabs.TabPane tab="Images" key="2" disabled={!selectedProduct}>
+              <Images
+                selectedProduct={selectedProduct}
+                getData={getData}
+                setShowProductForm={setShowProductForm}
+              />
             </Tabs.TabPane>
           </Tabs>
         </div>
