@@ -1,12 +1,13 @@
 import { Tabs } from 'antd'
 import React from 'react'
+import Products from './Products'
 
 function Admin() {
   return (
     <div>
       <Tabs>
             <Tabs.TabPane tab="Products" key="1">
-                <h1>Products</h1>
+                <Products />
             </Tabs.TabPane>
             <Tabs.TabPane tab="Users" key="2">
                 <h1>Users</h1>
