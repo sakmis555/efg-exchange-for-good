@@ -43,13 +43,21 @@ function ProtectedPage({ children }) {
       <div>
         {/* header of every protected page */}
         <div className="flex items-center justify-between bg-primary p-6"> 
-          <h1 className="text-2xl text-whiteLike pl-3">
+          <h1 className="text-2xl text-whiteLike pl-3 cursor-pointer"
+            onClick={() => navigate("/")}
+          >
             EFG
           </h1>
           <div className="bg-whiteLike py-2 px-5 rounded flex gap-2 items-center">
           <i className="ri-user-4-fill"></i>
             <span className="underline cursor-pointer uppercase"
-              onClick={() => navigate("/profile")}
+              onClick={() => {
+                if( user.role === "user") {
+                  navigate("/profile")
+                } else {
+                  navigate("/admin")
+                }
+              }}
             >
               {user.name}
             </span>
