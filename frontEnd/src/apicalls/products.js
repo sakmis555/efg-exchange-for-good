@@ -42,3 +42,14 @@ export const DeleteProduct = async(id) => {
     return error.message;
   }
 };
+
+// upload product image
+export const UploadProductImage = async(payload) => { // sm payload must have - 1. file, 2. productId
+  try {
+    const response = await axiosInstance.post("/api/products/upload-image-to-product", payload);
+    // console.log(response);
+    return response.data;
+  } catch (error) {
+    return error.message;
+  }
+}
