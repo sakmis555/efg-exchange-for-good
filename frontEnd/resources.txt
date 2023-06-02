@@ -27,7 +27,7 @@ npm modules- backend :
 5. cloudinary : for storing the images.
 6. nodemon : for restarting the server automatically whenever new code is saved.
 7. dotenv : for storing the environment variables.
-
+8. multer : for accessing the images from out internal system. (handling the image from our system to cloudinary)
 
 package-json - frontEnd
 "proxy" : "http://localhost:5000" => backend endpoint
@@ -76,3 +76,36 @@ What is Middleware?
     if valid response, user is logged in (authorized user)
     else invalid response, content of the page is not rendered.
     
+
+Layout
+-   for all the protected pages, layout will be common. 
+    hence, add to protected page.
+
+
+redux toolkit state management setup:
+Use Case 1. show and hide loader/spinner : when api is in processing state
+    need to lot of pages. Hence, redux concept is implement at global level
+
+    loaderSlice.js:
+    - import createSlice method
+
+all the child elements inside this provider can access the loading value, whatever the loader and slices we write.
+
+
+show and hide loaders: design the spinner component and show & hide it based on the api call status.
+
+
+user data is only present in the protected route. It should be available across the application.
+will store the data in userSlice.js
+
+=> study useDispatch, useSelector from react-redux.
+
+Title : Images upload backend cloudinary
+Cloudinary is used to store the images
+Malter is used to access the images from our internal system.
+In the backend, we cannot access the system directly, cloudinary will help to access that.
+
+. From frontEnd, file and product Id is recieved, then insert the URL into the product Id in the images array once the image upload is successful.
+    multer is handling the image from our system to cloudinary
+    once we get the cloudinary imageUrl,
+    We will handle it in our code base to get it into the mongodb.

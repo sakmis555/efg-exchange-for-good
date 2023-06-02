@@ -1,11 +1,21 @@
-import { Button, Upload } from "antd";
+import { Button, Upload, message } from "antd";
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { SetLoader } from "../../../redux/loadersSlice";
 
 function Images({selectedProduct, getData, setShowProductForm}) {
     const [file = null, setFile] = useState(null);
-
+    const dispatch = useDispatch();
     const upload = () => {
-        console.log(file);
+        try {
+            dispatch(SetLoader(true));
+            // upload image to cloudinary
+
+            dispatch(SetLoader(false));
+        } catch (error) {
+            dispatch(SetLoader(false));
+            message.error(error.message);
+        }
     }
   return (
   <div>
