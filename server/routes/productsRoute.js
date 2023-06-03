@@ -29,7 +29,9 @@ router.post("/get-products", async (req, res) => {
     if (seller) {
       filters.seller = seller;
     }
-    const products = await Product.find(filters).populate("seller").sort({ createdAt: -1 });
+    const products = await Product.find(filters)
+      .populate("seller")
+      .sort({ createdAt: -1 });
     res.send({
       success: true,
       products,
@@ -156,4 +158,21 @@ router.post(
     }
   }
 );
+
+// update product status - admin
+router.put("/update-product-status/:id", authMiddleware, async (req, res) => {
+  try {
+    const { status } = req.body;
+    await Product.findByIdAndUpdate(req.params.id, { status });
+    res.send({
+      success: true,
+      message: "Product status updated successfully",
+    });
+  } catch (error) {
+    res.send({
+      success: false,
+      message: error.message,
+    });
+  }
+});
 module.exports = router;

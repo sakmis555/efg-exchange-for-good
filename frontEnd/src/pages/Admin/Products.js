@@ -1,8 +1,8 @@
 import { Button, Table, message } from "antd";
 import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { SetLoader } from "../../redux/loadersSlice";
-import { GetProducts } from "../../apicalls/products";
+import { GetProducts, UpdateProductStatus } from "../../apicalls/products";
 import moment from "moment";
 
 function Products() {
@@ -24,8 +24,21 @@ function Products() {
     }
   };
 
-  const onUpdateStatus = (id, status) => {
-
+  const onStatusUpdate = async (id, status) => {
+    try {
+      dispatch(SetLoader(true));
+      const response = await UpdateProductStatus(id, status)
+      dispatch(SetLoader(false));
+      if (response.success) {
+        message.success(response.message);
+        getData();
+      } else {
+        throw new Error(response.message);
+      }
+    } catch (error) {
+      dispatch(SetLoader(false));
+      message.error(error.message);
+    }
   }
   const columns = [
     {
@@ -58,50 +71,58 @@ function Products() {
     {
       title: "Status",
       dataIndex: "status",
+      render: (text, record) => {
+        return record.status.toUpperCase();
+      }
     },
     {
       title: "Added On",
       dataIndex: "createdAt",
       render: (text, record) => {
-        return moment(record.createdAt).format("DD-MM-YYYY hh:mm:ss A");
+        return moment(record.createdAt).format("DD-MM-YYYY  hh:mm A");
       },
     },
     {
       title: "Action",
       dataIndex: "action",
       render: (text, record) => {
-        const {status, _id} = record;
-        return <div className="flex gap-5">
-          {status === "pending" && (
-            <Button type="primary" className="rounded"
-              onClick={onUpdateStatus(_id, "approved")}
-            >
-              Approve
-            </Button>
-          )}
-          {status === "pending" && (
-            <Button type="primary" className="rounded"
-              onClick={onUpdateStatus(_id, "rejected")}
-            >
-              Reject
-            </Button>
-          )}
-          {status === "approved" && (
-            <Button type="primary" className="rounded"
-              onClick={onUpdateStatus(_id, "blocked")}
-            >
-              Block
-            </Button>
-          )}
-          {status === "blocked" && (
-            <Button type="primary" className="rounded"
-              onClick={onUpdateStatus(_id, "approved")}
-            >
-              Unblock
-            </Button>
-          )}
-
-        </div>;
+        const { status, _id } = record;
+        return (
+          <div className="flex gap-3">
+            {status === "pending" && (
+              <Button type="primary"
+                className="underline cursor-pointer"
+                onClick={() => onStatusUpdate(_id, "approved")}
+              >
+                Approve
+              </Button>
+            )}
+            {status === "pending" && (
+              <Button type="primary"
+                className="rounded"
+                onClick={() => onStatusUpdate(_id, "rejected")}
+              >
+                Reject
+              </Button>
+            )}
+            {status === "approved" && (
+              <Button type="primary"
+                className="rounded"
+                onClick={() => onStatusUpdate(_id, "blocked")}
+              >
+                Block
+              </Button>
+            )}
+            {status === "blocked" && (
+              <Button type="primary"
+                className="rounded"
+                onClick={() => onStatusUpdate(_id, "approved")}
+              >
+                Unblock
+              </Button>
+            )}
+          </div>
+        );
       },
     },
   ];
