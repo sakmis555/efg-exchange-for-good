@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { SetLoader } from "../../redux/loadersSlice";
 import { UpdateProductStatus } from "../../apicalls/products";
 import moment from "moment";
-import { GetAllRegisteredUsers } from "../../apicalls/users";
+import { GetAllRegisteredUsers, UpdateUserStatus } from "../../apicalls/users";
 
 function Users() {
   const [users, setUsers] = React.useState([]);
@@ -28,7 +28,7 @@ function Users() {
   const onStatusUpdate = async (id, status) => {
     try {
       dispatch(SetLoader(true));
-      const response = await UpdateProductStatus(id, status)
+      const response = await UpdateUserStatus(id, status)
       dispatch(SetLoader(false));
       if (response.success) {
         message.success(response.message);
@@ -78,23 +78,7 @@ function Users() {
         const { status, _id } = record;
         return (
           <div className="flex gap-3">
-            {status === "pending" && (
-              <Button type="primary"
-                className="underline cursor-pointer"
-                onClick={() => onStatusUpdate(_id, "approved")}
-              >
-                Approve
-              </Button>
-            )}
-            {status === "pending" && (
-              <Button type="primary"
-                className="rounded"
-                onClick={() => onStatusUpdate(_id, "rejected")}
-              >
-                Reject
-              </Button>
-            )}
-            {status === "approved" && (
+            {status === "active" && (
               <Button type="primary"
                 className="rounded"
                 onClick={() => onStatusUpdate(_id, "blocked")}
@@ -105,7 +89,7 @@ function Users() {
             {status === "blocked" && (
               <Button type="primary"
                 className="rounded"
-                onClick={() => onStatusUpdate(_id, "approved")}
+                onClick={() => onStatusUpdate(_id, "active")}
               >
                 Unblock
               </Button>

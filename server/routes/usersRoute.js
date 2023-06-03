@@ -50,6 +50,12 @@ router.post("/login", async (req, res) => {
       // })
       throw new Error("User not found! Try with different email");
     }
+
+    // if user is active or not?
+    if( user.status !== "active"){
+      throw new Error("This account is blocked, please contact admin");
+    }
+    
     // comparing passoword
     const plainPassword = req.body.password;
     const encryptedPassword = user.password;
@@ -64,8 +70,8 @@ router.post("/login", async (req, res) => {
 
     //create and assign token ( encrypt the user id -> in the form of token -> send it to the front end as the login response)
     // once logged in, there is a need of token to perform other api requests from front end
-    const token = jwt.sign({_userId: user._id}, process.env.jwt_secret);
-    
+    const token = jwt.sign({ _userId: user._id }, process.env.jwt_secret);
+
     // send response
     res.send({
       success: true,
@@ -89,18 +95,18 @@ router.get("/get-current-user", authMiddleware, async (req, res) => {
     res.send({
       success: true,
       message: "User fetched successfully",
-      data: user
-    })
+      data: user,
+    });
   } catch (error) {
     res.send({
       success: false,
       message: error.message,
-    })
+    });
   }
-})
+});
 
-// get all registered users 
-router.get("/get-all-registered-users", authMiddleware, async(req, res) => {
+// get all registered users - admin
+router.get("/get-all-registered-users", authMiddleware, async (req, res) => {
   try {
     const users = await User.find();
     res.send({
@@ -112,7 +118,24 @@ router.get("/get-all-registered-users", authMiddleware, async(req, res) => {
     res.send({
       success: false,
       message: error.message,
-    })
+    });
   }
-})
+});
+
+// get user status - admin
+router.put("/update-user-status/:id", authMiddleware, async (req, res) => {
+  try {
+    const {status} = req.body;
+    await User.findByIdAndUpdate(req.params.id, {status});
+    res.send({
+      success: true,
+      message: "User status updated successfully",
+    });
+  } catch (error) {
+    res.send({
+      success: false,
+      message: error.message,
+    });
+  }
+});
 module.exports = router;

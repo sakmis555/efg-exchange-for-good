@@ -1,9 +1,18 @@
 import { Tabs } from 'antd'
-import React from 'react'
+import React, { useEffect } from 'react'
 import Products from './Products'
 import Users from './Users'
+import { useSelector } from 'react-redux'
+import { useNavigate } from "react-router-dom";
 
 function Admin() {
+  const {user} = useSelector(state => state.users);
+  const navigate = useNavigate();
+  useEffect(() => {
+    if( user.role !== "admin") {
+      navigate("/");
+    }
+  })
   return (
     <div>
       <Tabs>
