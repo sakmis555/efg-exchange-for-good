@@ -18,7 +18,7 @@ function Home() {
   const getData = async () => {
     try {
       dispatch(SetLoader(true));
-      const response = await GetProducts(null);
+      const response = await GetProducts(filters);
       dispatch(SetLoader(false));
       if (response.success) {
         setProducts(response.data);

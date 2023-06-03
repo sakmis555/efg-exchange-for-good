@@ -39,6 +39,15 @@ export const EditProduct = async (id, payload) => {
   }
 };
 
+// get a product by id
+export const GetProductById = async (id) => {
+  try {
+    const response = await axiosInstance.get(`/api/products/get-product-by-id/${id}`);
+    return response.data;
+  } catch (error) {
+    return error.message;
+  }
+}
 // delete a product
 export const DeleteProduct = async (id) => {
   try {
@@ -70,6 +79,7 @@ export const UploadProductImage = async (payload) => {
 export const UpdateProductStatus = async (id, status) => {
   try {
     const response = await axiosInstance.put(
+
       `/api/products/update-product-status/${id}`,
       { status }
     );
