@@ -99,4 +99,20 @@ router.get("/get-current-user", authMiddleware, async (req, res) => {
   }
 })
 
+// get all registered users 
+router.get("/get-all-registered-users", authMiddleware, async(req, res) => {
+  try {
+    const users = await User.find();
+    res.send({
+      success: true,
+      message: "Users fetched successfully",
+      data: users,
+    });
+  } catch (error) {
+    res.send({
+      success: false,
+      message: error.message,
+    })
+  }
+})
 module.exports = router;

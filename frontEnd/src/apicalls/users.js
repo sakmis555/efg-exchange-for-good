@@ -29,3 +29,13 @@ export const GetCurrentUser = async () => {
     return error.message;
   }
 };
+
+// get all registered users - admin
+export const GetAllRegisteredUsers = async() => {
+  try {
+    const response = await axiosInstance("api/users/get-all-registered-users");
+    return response.data;
+  } catch (error) {
+    return error.message;
+  }
+}

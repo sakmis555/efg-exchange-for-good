@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const Product = require("../models/productModel");
+const User = require("../models/userModel");
 const authMiddleware = require("../middlewares/authMiddleware");
 const cloudinary = require("../config/cloudinaryConfig");
 const multer = require("multer");
@@ -176,3 +177,4 @@ router.put("/update-product-status/:id", authMiddleware, async (req, res) => {
   }
 });
 module.exports = router;
+
