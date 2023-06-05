@@ -2,12 +2,14 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { SetLoader } from "../../redux/loadersSlice";
 import { GetProductById } from "../../apicalls/products";
-import { message } from "antd";
+import { Button, message } from "antd";
 import Divider from "../../components/Divider";
 import { useNavigate, useParams } from "react-router-dom";
 import moment from "moment";
+import BidModal from "./BidModal";
 
 function ProductInfo() {
+  const [showAddNewBid, setShowAddNewBid] = useState(false);
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const [product, setProduct] = useState(null);
   const navigate = useNavigate();
@@ -107,8 +109,9 @@ function ProductInfo() {
                   <span>{product.warrantyAvailable ? "Yes" : "No"}</span>
                 </div>
               </div>
-              <Divider />
 
+              <Divider />
+              
               <div className="flex flex-col pr-5">
                 <h1 className="text-3xl font-bold text-secondary">
                   Owner Details
@@ -122,8 +125,23 @@ function ProductInfo() {
                   <span className="">{product.seller.email}</span>
                 </div>
               </div>
+              <Divider />
+
+              <div className="flex flex-col">
+                <div className="flex justify-between">
+                  <h1 className="text-3xl font-bold text-secondary">Bids</h1>
+                  <Button 
+                    type="primary"
+                    className="rounded"
+                    onClick={() => setShowAddNewBid(!showAddNewBid)}
+                  >
+                    New Bid
+                  </Button>
+                </div>
+              </div>
             </div>
           </div>
+          {showAddNewBid && <BidModal showBidModal={showAddNewBid} setShowBidModal={setShowAddNewBid} product={product} getData={getData} />}
         </div>
       </div>
     )
