@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { SetLoader } from "../../redux/loadersSlice";
-import { GetProductById } from "../../apicalls/products";
+import { GetAllBids, GetProductById } from "../../apicalls/products";
 import { Button, message } from "antd";
 import Divider from "../../components/Divider";
 import { useNavigate, useParams } from "react-router-dom";
@@ -15,6 +15,7 @@ function ProductInfo() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { id } = useParams();
+  const { user } = useSelector((state) => state.users);
 
   const getData = async () => {
     try {
@@ -22,7 +23,13 @@ function ProductInfo() {
       const response = await GetProductById(id);
       dispatch(SetLoader(false));
       if (response.success) {
-        setProduct(response.data);
+        const bidsResponse = await GetAllBids({product: id});
+        setProduct({
+          ...response.data,
+          bids: bidsResponse.data,
+        });
+      } else {
+        throw new Error(response.message);
       }
     } catch (error) {
       dispatch(SetLoader(false));
@@ -134,6 +141,7 @@ function ProductInfo() {
                     type="primary"
                     className="rounded"
                     onClick={() => setShowAddNewBid(!showAddNewBid)}
+                    disabled={user._id === product.seller._id}
                   >
                     New Bid
                   </Button>
