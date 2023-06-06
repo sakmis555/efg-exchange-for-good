@@ -5,8 +5,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { SetLoader } from "../../../redux/loadersSlice";
 import { DeleteProduct, GetProducts } from "../../../apicalls/products";
 import moment from "moment";
+import Bids from "./Bids";
 
 function Products() {
+  const [showbids, setShowBids] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [products, setProducts] = React.useState([]);
   const [showProductForm, setShowProductForm] = useState(false);
@@ -79,7 +81,7 @@ function Products() {
       dataIndex: "action",
       render: (text, record) => {
         return (
-          <div className="flex gap-5">
+          <div className="flex gap-5 items-center justify-left">
             <i
               className="ri-delete-bin-7-fill cursor-pointer"
               onClick={() => {
@@ -93,6 +95,16 @@ function Products() {
                 setShowProductForm(true);
               }}
             ></i>
+            <Button
+            type="primary"
+              className="underline cursor-pointer !h-[40px] rounded"
+              onClick={() => {
+                setSelectedProduct(record);
+                setShowBids(true);
+              }}
+            >
+              Show Bids
+            </Button>
           </div>
         );
       },
@@ -106,6 +118,7 @@ function Products() {
     <div>
       <div className="flex justify-end mb-2">
         <Button
+        className="rounded !h-[40px]"
           type="primary"
           onClick={() => {
             setSelectedProduct(null);
@@ -122,6 +135,14 @@ function Products() {
           setShowProductForm={setShowProductForm}
           selectedProduct={selectedProduct}
           getData={getData}
+        />
+      )}
+
+      {showbids && (
+        <Bids
+          showBidsModel={showbids}
+          setShowBidModel={setShowBids}
+          selectedProduct={selectedProduct}
         />
       )}
     </div>
