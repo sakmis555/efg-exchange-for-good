@@ -23,7 +23,7 @@ function ProductInfo() {
       const response = await GetProductById(id);
       dispatch(SetLoader(false));
       if (response.success) {
-        const bidsResponse = await GetAllBids({product: id});
+        const bidsResponse = await GetAllBids({ product: id });
         setProduct({
           ...response.data,
           bids: bidsResponse.data,
@@ -70,16 +70,14 @@ function ProductInfo() {
               })}
             </div>
             <div>
-              <h1>
-                Added On
-              </h1>
+              <h1>Added On</h1>
               <span>
                 {moment(product.createdAt).format("DD-MM-YYYY  hh:mm A")}
               </span>
             </div>
           </div>
 
-              {/* Product */}
+          {/* Product */}
           <div className="flex flex-col gap-6">
             <div>
               <h1 className="text-3xl font-bold text-secondary">
@@ -118,7 +116,7 @@ function ProductInfo() {
               </div>
 
               <Divider />
-              
+
               <div className="flex flex-col pr-5">
                 <h1 className="text-3xl font-bold text-secondary">
                   Owner Details
@@ -135,9 +133,9 @@ function ProductInfo() {
               <Divider />
 
               <div className="flex flex-col">
-                <div className="flex justify-between">
+                <div className="flex justify-between mt-3">
                   <h1 className="text-3xl font-bold text-secondary">Bids</h1>
-                  <Button 
+                  <Button
                     type="primary"
                     className="rounded"
                     onClick={() => setShowAddNewBid(!showAddNewBid)}
@@ -146,10 +144,41 @@ function ProductInfo() {
                     New Bid
                   </Button>
                 </div>
+
+                {product.showBidsOnProductPage &&
+                  product.bids.map((bid) => {
+                    return (
+                      <div className="border border-gray-300 border-solid p-2 mt-5 rounded">
+                        <div className="flex justify-between mt-2 text-gray-700">
+                          <span>Name</span>
+                          <span>{bid.buyer.name}</span>
+                        </div>
+                        <div className="flex justify-between mt-2 text-gray-500">
+                          <span>Bid Amount</span>
+                          <span>₹ {bid.bidAmount}</span>
+                        </div>
+                        <div className="flex justify-between mt-2 text-gray-500">
+                          <span>Bid Placed On</span>
+                          <span>
+                            {moment(bid.createdAt).format(
+                              "MMM D, YYYY hh:mm A"
+                            )}
+                          </span>
+                        </div>
+                      </div>
+                    );
+                  })}
               </div>
             </div>
           </div>
-          {showAddNewBid && <BidModal showBidModal={showAddNewBid} setShowBidModal={setShowAddNewBid} product={product} getData={getData} />}
+          {showAddNewBid && (
+            <BidModal
+              showBidModal={showAddNewBid}
+              setShowBidModal={setShowAddNewBid}
+              product={product}
+              getData={getData}
+            />
+          )}
         </div>
       </div>
     )

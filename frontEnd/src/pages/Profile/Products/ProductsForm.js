@@ -85,13 +85,14 @@ function ProductsForm({
         onOk={() => {
           formRef.current.submit();
         }}
-        {...(selectedTab === "2" && {footer : false})}
+        {...(selectedTab === "2" && { footer: false })}
       >
         <div>
           <h1 className="text-3xl text-primary text-center font-semibold uppercase">
             {selectedProduct ? "Edit Product" : "Add Product"}
           </h1>
-          <Tabs defaultActiveKey="1"
+          <Tabs
+            defaultActiveKey="1"
             activeKey={selectedTab}
             onChange={(key) => setSelectedTab(key)}
           >
@@ -153,6 +154,26 @@ function ProductsForm({
                     );
                   })}
                 </div>
+
+                <Form.Item
+                  label="Show bids on product page"
+                  name="showBidsOnProductPage"
+                  valuePropName="checked"
+                >
+                  <Input
+                    type="checkbox"
+                    onChange={(event) => {
+                      formRef.current.setFieldsValue({
+                        showBidsOnProductPage: event.target.checked,
+                      });
+                    }}
+                    checked={formRef.current?.getFieldValue(
+                      "showBidsOnProductPage"
+                    )}
+                    style={{width: 50}}
+                    className="ml-4"
+                  />
+                </Form.Item>
               </Form>
             </Tabs.TabPane>
             <Tabs.TabPane tab="Images" key="2" disabled={!selectedProduct}>
