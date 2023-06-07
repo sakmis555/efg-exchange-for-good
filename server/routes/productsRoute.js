@@ -25,7 +25,7 @@ router.post("/add-product", authMiddleware, async (req, res) => {
 // get all products
 router.post("/get-products", async (req, res) => {
   try {
-    const { seller, categories = [], age = [], status } = req.body;
+    const { seller, category = [], age = [], status } = req.body;
     let filters = {};
     if (seller) {
       filters.seller = seller;
@@ -33,12 +33,25 @@ router.post("/get-products", async (req, res) => {
     if (status) {
       filters.status = status;
     }
+
+    // filter by category
+    if (category.length > 0) {
+      filters.category = { $in: category };
+    }
+    // filter by age
+    if( age.length > 0) {
+      age.forEach((item) => {
+        const fromAge = item.split("-")[0];
+        const toAge = item.split("-")[1];
+        filters.age = {$gte: fromAge, $lte: toAge};
+      })
+    }
     const products = await Product.find(filters)
       .populate("seller")
       .sort({ createdAt: -1 });
     res.send({
       success: true,
-      data : products,
+      data: products,
     });
   } catch (error) {
     res.send({
@@ -55,14 +68,14 @@ router.get("/get-product-by-id/:id", async (req, res) => {
     res.send({
       success: true,
       data: product,
-    })
+    });
   } catch (error) {
     res.send({
       success: false,
       message: error.message,
-    })
+    });
   }
-})
+});
 // edit a product
 router.put("/edit-product/:id", authMiddleware, async (req, res) => {
   try {
@@ -195,4 +208,3 @@ router.put("/update-product-status/:id", authMiddleware, async (req, res) => {
   }
 });
 module.exports = router;
-

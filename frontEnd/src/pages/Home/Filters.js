@@ -48,7 +48,7 @@ const ages = [
   },
   {
     name: "13+ years old",
-    value: "13+",
+    value: "13-20",
   },
 ];
 

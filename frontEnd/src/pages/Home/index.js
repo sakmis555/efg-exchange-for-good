@@ -18,7 +18,7 @@ function Home() {
   const [filters, setFilters] = useState({
     status: "approved",
     category: [],
-    age: []
+    age: [],
   });
 
   const getData = async () => {
@@ -35,15 +35,9 @@ function Home() {
     }
   };
 
-
-
   useEffect(() => {
     getData();
-  }, []);
-
-  useEffect(() => {
-    getData();
-  },[filters]);
+  }, [filters]);
   return (
     <div className="flex gap-5 bg-whiteLike min-h-screen">
       {showFilters && (
@@ -107,4 +101,3 @@ function Home() {
 }
 
 export default Home;
-

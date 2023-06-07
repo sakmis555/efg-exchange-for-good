@@ -113,6 +113,10 @@ function ProductInfo() {
                   <span>Warranty available</span>
                   <span>{product.warrantyAvailable ? "Yes" : "No"}</span>
                 </div>
+                <div className="flex justify-between mt-3">
+                  <span>Purchased Year</span>
+                  <span>{moment().subtract(product.age, 'years').format("YYYY")} ({product.age} Years Old)</span>
+                </div>
               </div>
 
               <Divider />
