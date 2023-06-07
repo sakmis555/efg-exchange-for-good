@@ -72,7 +72,7 @@ function ProtectedPage({ children }) {
         </div>
 
         {/* Body */}
-        <div className="p-5">
+        <div className="">
           {children}
         </div>
         
