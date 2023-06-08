@@ -6,6 +6,7 @@ import { Input, message } from "antd";
 import Divider from "../../components/Divider";
 import { useNavigate } from "react-router-dom";
 import Filters from "./Filters";
+import moment from "moment";
 
 function Home() {
   const [showFilters, setShowFilters] = useState(true);
@@ -86,9 +87,15 @@ function Home() {
                       {product.description}
                     </p>
                     <Divider />
-                    <span className="text-green-700 text-xl text-bold mt-0">
-                      ₹ {product.price}
-                    </span>
+                    <div className="p-2 flex flex-col-2 justify-between items-center gap-0 pb-0">
+                      <span className="text-green-700 text-xl text-bold mt-0">
+                        ₹ {product.price}
+                      </span>
+                      <p className="text-gray-500">
+                        {product.age} {product.age === 1 ? "yr " : "yrs "}
+                        Old
+                      </p>
+                    </div>
                   </div>
                 </div>
               );
