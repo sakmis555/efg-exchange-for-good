@@ -6,7 +6,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { SetLoader } from "../redux/loadersSlice";
 import { SetUser } from "../redux/userSlice";
 import Notifications from "./Notifications";
-import { GetAllNotifications } from "../apicalls/notifications";
+import {
+  GetAllNotifications,
+  ReadAllNotifications,
+} from "../apicalls/notifications";
 
 function ProtectedPage({ children }) {
   // const [user, setUser] = useState(null);
@@ -41,7 +44,7 @@ function ProtectedPage({ children }) {
 
       // console.log(response);
       dispatch(SetLoader(false));
-      if(response.success) {
+      if (response.success) {
         setNotifications(response.data);
         // console.log(response.data);
       } else {
@@ -51,7 +54,20 @@ function ProtectedPage({ children }) {
       dispatch(SetLoader(false));
       message.error(error.message);
     }
-  }
+  };
+
+  const ReadNotifications = async () => {
+    try {
+      const response = await ReadAllNotifications();
+      if (response.success) {
+        GetNotifcations();
+      } else {
+        throw new Error(response.message);
+      }
+    } catch (error) {
+      message.error(error.message);
+    }
+  };
   useEffect(() => {
     if (localStorage.getItem("token")) {
       validateToken();
@@ -91,7 +107,10 @@ function ProtectedPage({ children }) {
                   notifications?.filter((notification) => !notification.read)
                     .length
                 }
-                onClick={() => setShowNotifications(true)}
+                onClick={() => {
+                  ReadNotifications();
+                  setShowNotifications(true);
+                }}
                 className="cursor-pointer"
               >
                 <Avatar
@@ -119,7 +138,7 @@ function ProtectedPage({ children }) {
 
         <Notifications
           notifications={notifications}
-          reloadNotifictions={setNotifications}
+          GetNotifcations={GetNotifcations}
           showNotifications={showNotifications}
           setShowNotifications={setShowNotifications}
         />

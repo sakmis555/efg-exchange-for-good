@@ -9,12 +9,13 @@ import Divider from "./Divider";
 
 function Notifications({
   notifications = [],
-  reloadNotifications,
+  GetNotifcations,
   showNotifications,
   setShowNotifications,
 }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  
   const deleteNotification = async (id) => {
     try {
       dispatch(SetLoader(true));
@@ -22,7 +23,7 @@ function Notifications({
       dispatch(SetLoader(false));
       if (response.success) {
         message.success(response.message);
-        reloadNotifications();
+        GetNotifcations();
       } else {
         throw new Error(response.message);
       }

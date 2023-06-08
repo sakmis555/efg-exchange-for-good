@@ -42,9 +42,9 @@ router.get("/get-all-notifications", authMiddleware, async (req, res) => {
 });
 
 // deleter a notificaion
-router.delete("/delete-notificaion/:id", authMiddleware, async (req, res) => {
+router.delete("/delete-notification/:id", authMiddleware, async (req, res) => {
   try {
-    await Notificaion.findByIdAndDelete(req.params.id);
+    await Notification.findByIdAndDelete(req.params.id)
     res.send({
       success: true,
       message: "Notification deleted successfully",
@@ -64,6 +64,10 @@ router.put("/read-all-notifications", authMiddleware, async (req, res) => {
       { user: req.body.userId, read: false },
       { $set: { read: true } }
     );
+    res.send({
+      success: true,
+      message: "All notifications marked as read",
+    });
   } catch (error) {
     res.send({
       success: false,

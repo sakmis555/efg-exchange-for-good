@@ -41,8 +41,15 @@ function Bids({ showBidsModel, setShowBidModel, selectedProduct }) {
       dataIndex: "bidAmount",
     },
     {
-      title: "Bid Data",
-      dataIndex: "bidData",
+      title: "Bid placed on",
+      dataIndex: "createdAt",
+      render: (text, record) => {
+        return moment(text).format("DD-MM-YYYY hh:mm A")
+      },
+    },
+    {
+      title: "Bid Date",
+      dataIndex: "bidDate",
       render: (text, record) => {
         return moment(text).format("MMMM D YYYY, h:mm A");
       },

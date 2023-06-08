@@ -43,7 +43,7 @@ function ProductInfo() {
   return (
     product && (
       <div className="h-screen">
-        <div className="grid grid-cols-2 gap-5 mt-5">
+        <div className="grid grid-cols-2 gap-5 mt-5 mx-8">
           {/* Image */}
           <div className="flex flex-col gap-6">
             <img
@@ -85,7 +85,7 @@ function ProductInfo() {
               </h1>
               <p className="text-gray-600">{product.description}</p>
               <Divider />
-              <div className="flex flex-col pr-5">
+              <div className="flex flex-col ">
                 <h1 className="text-3xl font-bold text-secondary">
                   Product Details
                 </h1>
@@ -121,7 +121,7 @@ function ProductInfo() {
 
               <Divider />
 
-              <div className="flex flex-col pr-5">
+              <div className="flex flex-col ">
                 <h1 className="text-3xl font-bold text-secondary">
                   Owner Details
                 </h1>
