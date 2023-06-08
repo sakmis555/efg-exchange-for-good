@@ -17,6 +17,6 @@ const notificationRoute = require('./routes/notificationsRoute');
 app.use("/api/users", usersRoute);
 app.use("/api/products", productRoute);
 app.use("/api/bids", bidsRoute);
-app.use("/api/notificaions", notificationRoute);
+app.use("/api/notifications", notificationRoute);
 
 app.listen(port, () => console.log(`Node/express Server is running on port ${port}`));

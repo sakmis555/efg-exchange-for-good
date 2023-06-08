@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { SetLoader } from "../redux/loadersSlice";
 import { SetUser } from "../redux/userSlice";
 import Notifications from "./Notifications";
+import { GetAllNotifications } from "../apicalls/notifications";
 
 function ProtectedPage({ children }) {
   // const [user, setUser] = useState(null);
@@ -33,9 +34,28 @@ function ProtectedPage({ children }) {
     }
   };
 
+  const GetNotifcations = async () => {
+    try {
+      dispatch(SetLoader(true));
+      const response = await GetAllNotifications();
+
+      // console.log(response);
+      dispatch(SetLoader(false));
+      if(response.success) {
+        setNotifications(response.data);
+        // console.log(response.data);
+      } else {
+        throw new Error(response.message);
+      }
+    } catch (error) {
+      dispatch(SetLoader(false));
+      message.error(error.message);
+    }
+  }
   useEffect(() => {
     if (localStorage.getItem("token")) {
       validateToken();
+      GetNotifcations();
     } else {
       navigate("/login");
     }
@@ -98,7 +118,7 @@ function ProtectedPage({ children }) {
         <div className="">{children}</div>
 
         <Notifications
-          notification={notifications}
+          notifications={notifications}
           reloadNotifictions={setNotifications}
           showNotifications={showNotifications}
           setShowNotifications={setShowNotifications}

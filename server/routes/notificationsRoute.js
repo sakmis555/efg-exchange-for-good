@@ -1,17 +1,21 @@
 const router = require("express").Router();
 const authMiddleware = require("../middlewares/authMiddleware");
-const Notificaion = require("../models/notificationsModel");
+const Notification = require("../models/notificationsModel");
 
 // add a notification
 router.post("/notify", authMiddleware, async (req, res) => {
   try {
-    const newNotification = new Notificaion(req.body);
+    // console.log("Before try execution")
+    const newNotification = new Notification(req.body);
+    // console.log(newNotification);
     await newNotification.save();
+    
     res.send({
       success: true,
       message: "Notification added successfully",
     });
   } catch (error) {
+    // console.log("notification route catch block executed");
     res.send({
       success: false,
       message: error.message,
@@ -19,15 +23,15 @@ router.post("/notify", authMiddleware, async (req, res) => {
   }
 });
 
-// get all notificaions by user
+// get all notifications by user
 router.get("/get-all-notifications", authMiddleware, async (req, res) => {
   try {
-    const notification = await Notificaion.find({
+    const notifications = await Notification.find({
       user: req.body.userId,
     }).sort({ createdAt: -1 });
     res.send({
       success: true,
-      data: notification,
+      data: notifications,
     });
   } catch (error) {
     res.send({
@@ -56,7 +60,7 @@ router.delete("/delete-notificaion/:id", authMiddleware, async (req, res) => {
 // read all notifications
 router.put("/read-all-notifications", authMiddleware, async (req, res) => {
   try {
-    await Notificaion.updateMany(
+    await Notification.updateMany(
       { user: req.body.userId, read: false },
       { $set: { read: true } }
     );
