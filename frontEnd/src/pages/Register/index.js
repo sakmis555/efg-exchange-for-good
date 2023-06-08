@@ -19,11 +19,11 @@ function Register() {
     try {
       dispatch(SetLoader(true));
       const response = await RegisterUser(values);
-      navigate("/login");
       dispatch(SetLoader(false));
 
       if (response.success) {
         message.success(response.message);
+        navigate("/login");
       } else {
         throw new Error(response.message);
       }
@@ -42,7 +42,7 @@ function Register() {
     <div className="h-screen bg-primary flex justify-center items-center">
       <div className="bg-whiteLike p-5 rounded w-[450px]">
         <h1 className="text-primary text-2xl">
-          EFG -<span className="text-lightGray"> REGISTER</span>
+          EFG -<span className="text-lightGray text-2xl"> REGISTER</span>
         </h1>
         <Divider />
         <Form layout="vertical" onFinish={onFinish}>
