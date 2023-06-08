@@ -49,8 +49,14 @@ function Products() {
       title: "Product",
       dataIndex: "image",
       render: (text, record) => {
-        return <img src={record?.images?.length > 0 ? record.images[0] : ""} alt="" className="w-20 h-20 object-cover rounded-md"/>
-      }
+        return (
+          <img
+            src={record?.images?.length > 0 ? record.images[0] : ""}
+            alt=""
+            className="w-20 h-20 object-cover rounded-md"
+          />
+        );
+      },
     },
     {
       title: "Name",
@@ -99,7 +105,7 @@ function Products() {
               }}
             ></i>
             <Button
-            type="primary"
+              type="primary"
               className="underline cursor-pointer !h-[40px] rounded"
               onClick={() => {
                 setSelectedProduct(record);
@@ -121,7 +127,7 @@ function Products() {
     <div>
       <div className="flex justify-end mb-2">
         <Button
-        className="rounded !h-[40px]"
+          className="rounded !h-[40px]"
           type="primary"
           onClick={() => {
             setSelectedProduct(null);
