@@ -124,8 +124,8 @@ function Products() {
     getData();
   }, []);
   return (
-    <div>
-      <div className="flex justify-end mb-2">
+    <div className="min-h-screen bg-whiteLike">
+      <div className="flex justify-end p-5 mr-72 pt-16">
         <Button
           className="rounded !h-[40px]"
           type="primary"
@@ -137,7 +137,13 @@ function Products() {
           <div className="text-whiteLike">Add Product</div>
         </Button>
       </div>
-      <Table columns={columns} dataSource={products} />
+      <Table
+        className="flex items-center justify-center"
+        style={{ width: "1400px", marginLeft: "50px" }}
+        size="large"
+        columns={columns}
+        dataSource={products}
+      />
       {showProductForm && (
         <ProductsForm
           showProductForm={showProductForm}

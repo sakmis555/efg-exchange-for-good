@@ -48,13 +48,6 @@ function Bids({ showBidsModel, setShowBidModel, selectedProduct }) {
       },
     },
     {
-      title: "Bid Date",
-      dataIndex: "bidDate",
-      render: (text, record) => {
-        return moment(text).format("MMMM D YYYY, h:mm A");
-      },
-    },
-    {
       title: "Message",
       dataIndex: "message",
     },

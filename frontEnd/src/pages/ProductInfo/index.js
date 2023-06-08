@@ -150,7 +150,7 @@ function ProductInfo() {
                 </div>
 
                 {product.showBidsOnProductPage &&
-                  product.bids.map((bid) => {
+                  product?.bids?.map((bid) => {
                     return (
                       <div className="border border-gray-300 border-solid p-2 mt-5 rounded">
                         <div className="flex justify-between mt-2 text-gray-700">
